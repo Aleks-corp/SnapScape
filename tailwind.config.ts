@@ -13,6 +13,8 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "hero-pattern": "url('./public/background.webp')",
+        "corner-tour":
+          "radial-gradient(circle at 0 0, transparent 28px, #f4f3ec 28px)",
       },
       colors: {
         "dark-color-title": "var(--dark-color-title)",
@@ -30,7 +32,13 @@ const config: Config = {
         "4": "0.1em",
         h1: "-0.7px",
       },
-      borderRadius: { "rd-12": "12px", "rd-20": "20px", "rd-64": "64px" },
+      borderRadius: {
+        "rd-12": "12px",
+        "rd-20": "20px",
+        "rd-28": "28px",
+        "rd-50": "50px",
+        "rd-64": "64px",
+      },
     },
   },
 
