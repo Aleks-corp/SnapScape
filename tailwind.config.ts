@@ -31,6 +31,8 @@ const config: Config = {
         "3": "0.05em",
         "4": "0.1em",
         h1: "-0.7px",
+        "tour-text": "-1.26px",
+        "tour-desc": "-0.32px",
       },
       borderRadius: {
         "rd-12": "12px",
@@ -38,6 +40,9 @@ const config: Config = {
         "rd-28": "28px",
         "rd-50": "50px",
         "rd-64": "64px",
+      },
+      dropShadow: {
+        "tour-text": "0px 4px 4px rgba(0, 0, 0, 0.25)",
       },
     },
   },

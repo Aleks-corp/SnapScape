@@ -68,7 +68,7 @@ Tour3Image.quality("100")
   )
 
 export const Tour4Video = cld.video("SnapScape/44-hd_1920_1080_30fps_peedho")
-Tour4Video.quality("100").resize(fill().width(790).height(524)).quality("100")
+Tour4Video.resize(fill().width(790).height(524)).quality("100")
 export const Tour4Image = cld.image("SnapScape/Tour-4_nwxbxu")
 Tour4Image.quality("100")
   .resize(fill().width(790).height(524).gravity(compass("south")))

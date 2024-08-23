@@ -1,0 +1,19 @@
+.flicking-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.flicking-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #ccc;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.flicking-pagination-bullet-active {
+  background-color: #333;
+}
