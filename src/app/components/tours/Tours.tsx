@@ -1,8 +1,7 @@
 "use client"
 import Image from "next/image"
-import Link from "next/link"
 import svg from "../../image/svg/arrow-white.svg"
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import ImageTour1 from "../../image/tours/Tour1.webp"
 import ImageTour2 from "../../image/tours/Tour2.webp"
 import ImageTour3 from "../../image/tours/Tour3.webp"
@@ -11,13 +10,47 @@ import ImageTour5 from "../../image/tours/Tour5.webp"
 import ImageTour6 from "../../image/tours/Tour6.webp"
 import ImageTour7 from "../../image/tours/Tour7.webp"
 import { handleMouseOver, handleMouseOut } from "@/app/helpers/toursMouseEvent"
-import "./Tours.css"
 
 import Flicking, { ViewportSlot } from "@egjs/react-flicking"
 import "@egjs/react-flicking/dist/flicking.css"
-import { AutoPlay, Pagination } from "@egjs/flicking-plugins"
+import "@egjs/flicking-plugins/dist/pagination.css"
+import { AutoPlay, Pagination, Sync } from "@egjs/flicking-plugins"
+import "./Tours.css"
 
 export default function Tours() {
+  const [plugins, setPlugins] = useState<Sync[]>([])
+  const imageFlickingRef = useRef<Flicking | null>(null)
+  const textFlickingRef = useRef<Flicking | null>(null)
+  useEffect(() => {
+    if (imageFlickingRef.current && textFlickingRef.current) {
+      setPlugins([
+        new Sync({
+          type: "index",
+          synchronizedFlickingOptions: [
+            {
+              flicking: imageFlickingRef.current,
+              isClickable: true,
+              isSlidable: false,
+            },
+            {
+              flicking: textFlickingRef.current,
+              isClickable: false,
+              isSlidable: true,
+            },
+          ],
+        }),
+      ])
+    }
+  }, [])
+
+  const pluginAnimate = new AutoPlay({
+    duration: 3000,
+    direction: "NEXT",
+    stopOnHover: true,
+    delayAfterHover: 500,
+  })
+  const pluginPaginate = new Pagination({ type: "bullet" })
+
   const imgRef1 = useRef<HTMLImageElement | null>(null)
   const playerRef1 = useRef<HTMLVideoElement | null>(null)
 
@@ -58,38 +91,16 @@ export default function Tours() {
     playerRef7,
   ]
 
-  const imageFlickingRef = useRef<Flicking | null>(null)
-  const textFlickingRef = useRef<Flicking | null>(null)
-
-  const syncSliders = () => {
-    if (imageFlickingRef.current && textFlickingRef.current) {
-      const currentIndex = imageFlickingRef.current.currentPanel?.index
-      const totalSlides = imageFlickingRef.current.panels.length
-      if (currentIndex !== undefined) {
-        const nextIndex = (currentIndex + 1) % totalSlides
-        textFlickingRef.current.moveTo(nextIndex)
-      }
-    }
-  }
-
-  const pluginsImage = new AutoPlay({
-    duration: 5000,
-    direction: "NEXT",
-    stopOnHover: true,
-  })
-
-  const pluginsText = new Pagination({ type: "bullet" })
-
   const stopOnHover = () => {
-    pluginsImage.stop()
+    pluginAnimate.stop()
   }
   const startOnBlur = () => {
-    pluginsImage.play()
+    pluginAnimate.play()
   }
   return (
     <div
       className="flex flex-col items-center bg-main-light-color rounded-rd-64 px-11 pt-14 pb-20
-        mt-[60rem]"
+        mt-[60rem] max-w-[90rem]"
       onFocus={(e) => handleMouseOver({ e, imageRefs, videoRefs })}
       onBlur={(e) => handleMouseOut({ e, imageRefs, videoRefs })}
       onMouseOver={(e) => handleMouseOver({ e, imageRefs, videoRefs })}
@@ -241,11 +252,16 @@ export default function Tours() {
           </div>
         </div>
       </div>
-      <div className="flex mt-3.5 gap-3.5">
+      <div
+        className="flex mt-3.5 gap-3.5"
+        onFocus={stopOnHover}
+        onBlur={startOnBlur}
+        onMouseOver={stopOnHover}
+        onMouseOut={startOnBlur}
+      >
         <Flicking
-          plugins={[pluginsImage]}
+          plugins={plugins}
           ref={imageFlickingRef}
-          onMoveStart={syncSliders}
           align="prev"
           circular={true}
           gap={10}
@@ -296,7 +312,7 @@ export default function Tours() {
               style={{ display: "none" }}
             >
               <source
-                src="https://res.cloudinary.com/deeooeyeg/video/upload/v1723579615/SnapScape/44-hd_1920_1080_30fps_peedho.mp4"
+                src="https://res.cloudinary.com/deeooeyeg/video/upload/v1724594486/SnapScape/55-hd_1920_1080_24fps_fqgu5q.mp4"
                 type="video/mp4"
               />
             </video>
@@ -321,7 +337,7 @@ export default function Tours() {
               style={{ display: "none" }}
             >
               <source
-                src="https://res.cloudinary.com/deeooeyeg/video/upload/v1723579615/SnapScape/44-hd_1920_1080_30fps_peedho.mp4"
+                src="https://res.cloudinary.com/deeooeyeg/video/upload/v1724594504/SnapScape/66-uhd_4096_1742_25fps_coj9n9.mp4"
                 type="video/mp4"
               />
             </video>
@@ -346,31 +362,29 @@ export default function Tours() {
               style={{ display: "none" }}
             >
               <source
-                src="https://res.cloudinary.com/deeooeyeg/video/upload/v1723579615/SnapScape/44-hd_1920_1080_30fps_peedho.mp4"
+                src="https://res.cloudinary.com/deeooeyeg/video/upload/v1724594519/SnapScape/77-uhd_3840_2160_30fps_y8vsi8.mp4"
                 type="video/mp4"
               />
             </video>
           </div>
         </Flicking>
-
-        <div className="relative w-[450px] h-[524px] bg-[#E4E4DC] rounded-rd-28 overflow-hidden">
+        <div
+          className="relative w-[450px] h-[524px] bg-[#E4E4DC] rounded-rd-50 rounded-br-rd-28
+            overflow-hidden"
+        >
           <div
-            onFocus={stopOnHover}
-            onBlur={startOnBlur}
-            onMouseOver={stopOnHover}
-            onMouseOut={startOnBlur}
-            className="relative w-[450px] h-[524px] bg-[#E4E4DC] rounded-rd-28 overflow-hidden"
+            className="relative w-[450px] h-full bg-[#E4E4DC] rounded-rd-50 rounded-br-rd-28
+              overflow-hidden"
           >
             <Flicking
-              plugins={[pluginsText]}
+              plugins={[...plugins, pluginAnimate, pluginPaginate]}
               ref={textFlickingRef}
-              onMovestart={syncSliders}
               align="center"
               circular={true}
               gap={10}
-              className="w-[400px] h-[500px]"
+              className="w-[364px] h-[480px]"
             >
-              <div className="w-[400px] h-[500px] py-6 px-6">
+              <div className="w-full h-full py-6 px-6">
                 <p
                   className="inline-flex px-4 py-1 mb-6 border-[1px] rounded-rd-28 border-dark-color-text
                     text-dark-color-title text-sm font-normal tracking-tour-desc leading-snug"
@@ -391,7 +405,7 @@ export default function Tours() {
                   Lights.
                 </p>
               </div>
-              <div className="w-[400px] h-[500px] py-6 px-6">
+              <div className="w-full h-full py-6 px-6">
                 <p
                   className="inline-flex px-4 py-1 mb-6 border-[1px] rounded-rd-28 border-dark-color-text
                     text-dark-color-title text-sm font-normal tracking-tour-desc leading-snug"
@@ -406,9 +420,9 @@ export default function Tours() {
                 </p>
                 <p className="w-80 text-dark-color-text text-base font-normal tracking-tour-desc leading-tight">
                   Join us on an unforgettable photography adventure to
-                  Reynisfjara Beach, Iceland’s iconic black sand wonder! Capture
-                  stunning shots of towering basalt columns, crashing waves, and
-                  mysterious sea stacks.
+                  Reynisfjara Beach, Iceland&apos;s iconic black sand wonder!
+                  Capture stunning shots of towering basalt columns, crashing
+                  waves, and mysterious sea stacks.
                   <span className="font-semibold">
                     {" "}
                     Book now and get a 10% discount{" "}
@@ -416,7 +430,7 @@ export default function Tours() {
                   – your perfect photo awaits!
                 </p>
               </div>
-              <div className="w-[400px] h-[500px] py-6 px-6">
+              <div className="w-full h-full py-6 px-6">
                 <p
                   className="inline-flex px-4 py-1 mb-6 border-[1px] rounded-rd-28 border-dark-color-text
                     text-dark-color-title text-sm font-normal tracking-tour-desc leading-snug"
@@ -430,9 +444,9 @@ export default function Tours() {
                   Seljalandsfoss & Waterfall Wonders
                 </p>
                 <p className="w-80 text-dark-color-text text-base font-normal tracking-tour-desc leading-tight">
-                  Experience the magic of Seljalandsfoss, one of Iceland’s most
-                  breathtaking waterfalls! Snap stunning photos from behind the
-                  cascade and explore the surrounding natural beauty.
+                  Experience the magic of Seljalandsfoss, one of Iceland&apos;s
+                  most breathtaking waterfalls! Snap stunning photos from behind
+                  the cascade and explore the surrounding natural beauty.
                   <span className="font-semibold">
                     {" "}
                     Book today and enjoy a 10% discount{" "}
@@ -440,7 +454,7 @@ export default function Tours() {
                   – adventure and amazing shots guaranteed!
                 </p>
               </div>
-              <div className="w-[400px] h-[500px] py-6 px-6">
+              <div className="w-full h-full py-6 px-6">
                 <p
                   className="inline-flex px-4 py-1 mb-6 border-[1px] rounded-rd-28 border-dark-color-text
                     text-dark-color-title text-sm font-normal tracking-tour-desc leading-snug"
@@ -455,21 +469,29 @@ export default function Tours() {
                 </p>
                 <p className="w-80 text-dark-color-text text-base font-normal tracking-tour-desc leading-tight">
                   Discover the enchanting beauty of Kirkjufell Mountain, one of
-                  Iceland’s most iconic landmarks. Capture breathtaking photos
-                  of its unique shape alongside the stunning Kirkjufellsfoss
-                  waterfall.
+                  Iceland&apos;s most iconic landmarks. Capture breathtaking
+                  photos of its unique shape alongside the stunning
+                  Kirkjufellsfoss waterfall.
                   <span className="font-semibold">
                     {" "}
                     Book now and enjoy a special 15% discount{" "}
                   </span>
-                  on this magical photography tour – don’t miss out on this
+                  on this magical photography tour – don&apos;t miss out on this
                   limited-time offer!
                 </p>
               </div>
               <ViewportSlot>
                 <div className="flicking-pagination" />
               </ViewportSlot>
-            </Flicking>
+            </Flicking>{" "}
+            <div className="absolute bottom-8 right-28">
+              <button
+                type="button"
+                className="text-xl font-medium tracking-tour-desc leading-tight"
+              >
+                Learn more
+              </button>
+            </div>
             <div
               className="w-[86px] h-[86px] absolute flex bottom-0 right-0 justify-end items-end
                 bg-main-light-color rounded-tl-rd-50"

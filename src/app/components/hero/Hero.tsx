@@ -4,7 +4,7 @@ import svg from "../../image/svg/arrow-right.svg"
 
 export default function Hero() {
   return (
-    <div className="w-full flex flex-col gap-4">
+    <div className="w-full flex flex-col gap-4 max-w-[90rem] px-11">
       <h1 className="text-7xl font-bold leading-tight tracking-h1 text-dark-color-title mt-44">
         Your adventure <br /> in Iceland begins here
       </h1>

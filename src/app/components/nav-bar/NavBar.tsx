@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export default function NavBar() {
   return (
-    <div className="relative z-10 w-full py-10 px-11">
+    <div className="relative z-10 w-full py-10 px-11 max-w-[90rem]">
       <div className="w-full items-center justify-between text-sm lg:flex">
         <Link
           href="/"
@@ -16,6 +16,7 @@ export default function NavBar() {
             width={46}
             height={46}
             priority
+            className="w-12 h-12"
           />
           <p
             className="px-6 py-5 text-dark-color-title text-center text-base font-bold leading-4
