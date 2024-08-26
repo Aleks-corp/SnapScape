@@ -15,11 +15,17 @@ const config: Config = {
         "hero-pattern": "url('./public/background.webp')",
         "corner-tour":
           "radial-gradient(circle at 0 0, transparent 28px, #f4f3ec 28px)",
+        "corner-about":
+          "radial-gradient(circle at 100% 0, transparent 28px, #141618 28px)",
       },
       colors: {
+        "main-dark-color": "var(--main-dark-color)",
         "dark-color-title": "var(--dark-color-title)",
         "dark-color-text": "var(--gray-color)",
         "main-light-color": "var(--light-color)",
+        "secondary-light-color": "var(--secondary-light-color)",
+        "accent-color": "var(--accent-color)",
+        "accent-light-color": "var(--accent-light-color)",
         "btn-w": "rgba(255, 255, 255, 0.70)",
       },
       boxShadow: {
